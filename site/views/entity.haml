@@ -1,0 +1,27 @@
+%section.container
+  = haml :"partials/page_header", locals: {header_text: @header_text}
+
+  %header.row.entity_header
+    .column{style: "margin-top: 2.5%"}
+      %h2= @entity[:name]
+      %a{href: request.url.gsub(".html","")}= request.url.gsub(".html","")
+  .row.metadata.well
+    .seven.columns
+      %h3 About this Entry
+      %dl=display_terms(@graph)
+
+    %aside.five.columns.lod_links
+      %h3 Linked Data
+      %ul.unstyled
+        %li
+          = lod_links(request.path)
+          <br><br/>
+        - GraphBuilder.public_instance_methods.sort.each do |vocab|
+          %li= lod_links(request.path,vocab)
+       
+  .row
+    .column.pagination
+      - if request.referrer && request.referrer!= "/"
+        %a.button.small-button{href:  request.referrer} Back
+      %a.button.small-button{href:  url("/")} Home
+

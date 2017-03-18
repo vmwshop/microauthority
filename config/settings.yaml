@@ -1,0 +1,15 @@
+# Information about the hosting institution.  
+institution_name: CMOA
+institution_url: http://www.cmoa.org
+header_text: "MicroAuthority: <span class='subhead'>a linked open data authority file for small institutions.</span>"
+footer_text: "<strong>MicroAuthority</strong> is a project of the <a href='http://www.museumprovenance.org'>Art Tracks</a> program at <a href='http://www.cmoa.org'>Carnegie Museum of Art</a>.<br>Funding has been provided by the <a href='http://www.neh.gov/'>National Endowment for the Humanities</a>."
+domain: http://microauthority.museumprovenance.org
+
+# Information about this specific authority
+csv_file_name: data.csv
+
+
+sitemap_notification_urls:
+  # google: http://www.google.com/webmasters/tools/ping?sitemap=%s
+  # bing:   http://www.bing.com/ping?sitemap=%s 
+

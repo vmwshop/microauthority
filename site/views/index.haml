@@ -1,0 +1,137 @@
+%section.container
+  = haml :"partials/page_header", locals: {header_text: @header_text}
+  %section.demo
+    .row
+      .column#typeahead
+        %label Search for a Name
+        %input.u-full-width.typeahead{type:"text", placeholder: "Enter a name..."}
+    .row
+      .column
+        %p.instructions
+          Search across all <strong>#{@total.to_s(:delimited)}</strong> people at <a href="#{@config["institution_url"]}" target="_blank">#{@config["institution_name"]}</a> or 
+          %a{href: url("/list")} browse all the entries.
+.secondary
+  %section.container.features
+    .row
+      .column
+        / %h1 Supported Features
+        %p.primary
+          If you've got a list of people and you'd like to publish them as <a href="https://www.w3.org/standards/semanticweb/data" target="_blank">Linked Open Data</a>, <strong>MicroAuthority</strong> is a simple too that provides an API, search, and other tools for developers and researchers in the digital humanities and cultural heritage. 
+        %p
+          <strong>MicroAuthority</strong> creates both HTML & Linked Open Data endpoints for 
+          institutional Agent authority files—lists of people, organizations, and groups. 
+          Data is provided by the institution as a CSV file.  <strong>MicroAuthority</strong> automatically creates a unique URI for every row in that CSV file that works as both a <a href="#{url("/1004281.html")}">webpage</a> and as machine-readable <a href="#{url("/1004281.jsonld")}">Linked Open Data</a>. 
+
+    .row.callouts
+      .six.columns
+        %aside
+          %h2 Discovery Endpoints
+          %p
+            If you <em>don't</em> know who you're looking for, <strong>MicroAuthority</strong> provides a browsable list of possible people.
+
+            For humans, there are 
+            %a{href: url("/list")} index pages
+            that list all of the entries.
+          %p
+            For robots, the 
+            %a{href: url("list.json")} same index
+            is available as JSON name/id pairs.
+      .six.columns
+        %aside
+          %h2 Search & Typeahead Support
+          %p
+            If you <em>do</em> know who you're looking for,
+            <strong>MicroAuthority</strong> provides typeahead support for search interfaces.
+            
+          %p
+            Try it above, or see the JSON:
+            %a{href: url('/typeahead?q=monet')} /typeahead?q=monet'.
+
+      .row.callouts
+        .six.columns
+          %aside
+            %h2 Linked Open Data Schemas
+            %p
+              For each entry, <strong>MicroAuthority</strong> provides a consolidated graph that maps the fields to many common schemas, including #{@vocabs.map{|a| "<span class='vocab' >#{a}</span>"}.join(", ")}.
+              Each entry is provided in
+              %a{href: url("/1004281.jsonld")} JSON-LD,
+              %a{href: url("/1004281.ttl")} Turtle,
+              and
+              %a{href: url("/1004281.rdf")} RDF XML.
+
+            %p
+              We also provide the ability to retrieve each entry's graph per-schema.  Try it:
+              %a{href: url("/1004281.jsonld?vocabs=schema")} /1004281.jsonld?vocabs=schema
+
+
+        .six.columns
+          %aside
+            %h2 OpenRefine Reconciliation API
+            %p
+              <strong>MicroAuthority</strong> provides <a href='#{url("/reconcile")}'>an endpoint</a> for use with <a href="https://github.com/OpenRefine/OpenRefine", target="_blank">OpenRefine</a> for reconciling other lists of names to this one.  It uses the <a href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliation-Service-API", target="_blank">OpenRefine Reconciliation API</a>, which is not only supported by OpenRefine, but by a growing number of other tools.
+            %p
+              Try it: <a href='#{url("/reconcile?query=monet")}'>/reconcile?query=monet</a>
+
+      .row.callouts
+        .six.columns
+          %aside
+            %h2 Redirect Support 
+            %p
+              <strong>MicroAuthority</strong> supports per-entry links to an external sites, so a URI can link to an institutional page, but still provide dereferenceable <a href='#{url("/7727.ttl")}'>Linked Data</a> via file extension or content negotiation.
+              <br/>Try it: <a href='#{url("/7727.html")}'>/7727</a>
+            %p
+              It also supports per-entry redirects, so any entry can fully redirect to another internal or external URI.
+              <br>Try it: <a href='#{url("/1002332")}'>/1002332</a>
+
+              
+        .six.columns
+          %aside
+            %h2 Sitemaps & Notifications
+            %p
+              <strong>MicroAuthority</strong> generates standard <a href="/sitemap.xml.gz">XML Sitemaps</a> and optionally allows notifying major (and minor) search engines on each data refresh.  
+
+  
+        .row.callouts
+          .six.columns
+            %aside
+              %h2 Bulk Download
+              %p
+                You can download all of the content from <strong>MicroAuthority</strong> whenever you'd like.  You can have it as a <a href="/bulk.csv">CSV file</a>, or as Linked Open Data in as JSON-LD, RDF/XML, or TTL form.
+              %p <em>Actual LOD download links coming soon.</em>
+          .six.columns
+            %aside
+              %h2 Free and Open Source
+              %p
+                This project is open source, free, available and configurable by any institution. All you have to do is change a couple of lines in a config file and add your own CSV file.  That's it—it can be easily hosted on Heroku or any other cloud provider.
+              %p
+                Details and source code are available <a href="https://github.com/arttracks/microauthority" target="_blank">on GitHub</a> under an <a href="https://opensource.org/licenses/MIT" target="_blank">MIT License</a>. 
+
+
+                
+      
+- content_for :javascript do
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+  <script src="/js/typeahead.bundle.min.js"></script>
+  
+  :javascript
+    var typeahead = new Bloodhound({
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      remote: {
+        url: '../typeahead?q=%QUERY',
+        wildcard: '%QUERY'
+      }
+    });
+
+    $('#typeahead input').typeahead(null, {
+      source: typeahead,
+      display: "value",
+      highlight: true,
+      minLength: 1
+    });
+
+    $('#typeahead').bind('typeahead:select', function(ev, suggestion) {
+      window.location = suggestion.id
+    });
+    
+  

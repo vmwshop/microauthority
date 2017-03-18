@@ -1,0 +1,108 @@
+@import normalize
+@import skeleton
+@import constants
+
+
+/* ---- BASIC PAGE STRUCTURE ---- */
+html
+  background-color: #000 
+body 
+  background-color: $BG_COLOR
+  font-size: 170%
+.container 
+  max-width: 1000px 
+
+/* ---- RESETS FOR ENTITIES ---- */
+
+input[type="email"], input[type="number"], input[type="search"], input[type="text"], input[type="tel"], input[type="url"], input[type="password"], textarea, select 
+  border-color: $BORDER_COLOR
+
+ul.unstyled
+  list-style: none
+  li
+    margin-bottom: .25rem
+
+
+/* ---- CODE FOR DARKER SECTIONS ---- */
+.secondary 
+  background: $SECONDARY_COLOR
+  border-top: 7px solid darken($SECONDARY_COLOR,10)
+  color: #eee
+  padding-top: 4rem
+  padding-bottom: 8rem
+
+  pre code 
+    background-color: $SECONDARY_COLOR
+
+
+
+footer.footer 
+  color: #808080
+  border: none
+  padding-bottom: 0
+  background: #000
+  font-size: 80%
+  text-align: center
+  a  
+    color: #167c9c
+
+section section
+  margin-top: 6rem
+  margin-bottom: 12rem
+
+
+/* ---- BUTTON STYLES ---- */
+.button, 
+input[type="submit"],
+input[type="reset"],
+input[type="button"] 
+  background-color: #fff
+
+
+.button.extra-space 
+  margin-right: 5rem
+
+.button-row 
+  text-align: center
+  margin-top: 3rem
+  padding-top: 3rem
+  border-top: 1px solid #ccc
+
+.button.disabled, .button[disabled] 
+  pointer-events: none
+  cursor: default
+  color: #999
+
+.button.small-button 
+  height: 25px
+  padding: 0 18px
+  line-height: 25px
+  margin-bottom: 0
+
+.well
+  background-color: $WELL_COLOR
+  padding: 3% 3%   
+
+#page_header
+  border-bottom: 1px solid $BORDER_COLOR
+  padding-bottom: 1rem
+  margin-bottom: 6rem
+  padding-top: 2rem
+  a
+    text-decoration: none
+    color: inherit
+  h1
+    font-size: 2.6rem
+    margin-bottom: 0rem
+    .subhead
+      opacity: .6
+      font-size: 80%
+
+
+
+
+
+@import index_page
+@import entity_page
+@import list_page
+

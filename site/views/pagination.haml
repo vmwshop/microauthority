@@ -1,0 +1,34 @@
+.container
+  = haml :"partials/page_header", locals: {header_text: @header_text}
+
+  %header.row
+    .column
+      Entries #{@start.to_s(:delimited)} to #{[@end,@total].min.to_s(:delimited)} of #{@total.to_s(:delimited)} 
+  .row.paged_list.well
+    .four.columns
+      %ol{start: @start}
+        - @entries[0,34].each do |entry|
+          %li
+            %a{href: entry[:url]}= entry[:name] 
+    -if @entries.count >=34
+      .four.columns
+        %ol{start: @start + 34}
+          - @entries[34,33].each do |entry|
+            %li
+              %a{href: entry[:url]}= entry[:name] 
+    -if @entries.count >=67
+      .four.columns
+        %ol{start: @start+67}
+          - @entries[67,33].each do |entry|
+            %li
+              %a{href: entry[:url]}= entry[:name] 
+  .row
+    .column.pagination
+      %a.small-button.button{href: request.path+"?offset=#{@start-100}", disabled: (@start <= 1)} prev 
+      %a.small-button.button{href: request.path+"?offset=#{@end+1}", disabled: (@end >= @total)} next 
+  .row
+    .column.pagination
+      %a.small-button.button{href:  url("/")} Home
+
+
+

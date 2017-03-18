@@ -1,0 +1,20 @@
+!!!
+%html{lang: "eng"}
+  %head
+ 
+    %meta{ charset: 'utf-8'}
+    %title MicroAuthority
+    %meta{ name: 'author', content: 'David Newbury'}
+    %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1'}
+    %link{rel: "icon", type:"image/png", href:"/favicon.png"}
+    
+    =stylesheet '/stylesheets/base.css'
+    =stylesheet '//fonts.googleapis.com/css?family=Raleway:400,300,600'
+
+  %body
+    %main
+      = yield
+    = haml :"partials/page_footer", locals: {footer_text: @footer_text}
+
+    = yield_content :javascript
+    
