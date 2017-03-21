@@ -205,7 +205,6 @@ DEPENDENCIES
   rack
   rack-cache
   rack-cors
-  rdf-tabular
   sass
   sinatra
   sinatra-contrib

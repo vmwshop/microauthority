@@ -27,10 +27,6 @@ require "./lib/vocab_helper.rb"
 
 class MicroAuthority < Sinatra::Base
 
-  use Rack::Auth::Basic, "Protected Area" do |username, password|
-    username == 'cmoa' && password == 'cmoa'
-  end
-
   helpers Sinatra::LinkHeader
   helpers Sinatra::ContentFor
   helpers MetadataHelper
